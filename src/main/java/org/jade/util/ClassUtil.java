@@ -61,7 +61,6 @@ public class ClassUtil {
 			} else {
 				String name = file.getName();
 				if (name.endsWith(".class")) {
-					// ?
 					String className = packageName + "." + name.substring(0, name.length() - 6);
 					classNameList.add(className);
 					LOGGER.info("find class{} ", className);
