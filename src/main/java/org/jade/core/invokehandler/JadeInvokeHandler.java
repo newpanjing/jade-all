@@ -10,12 +10,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import org.jade.core.api.SQL;
-import org.jade.core.constrant.SQLType;
-import org.jade.db.DataSourceService;
+import org.jade.core.api.SQLParam;
+import org.jade.core.domain.SQLParamContext;
 
 /**
  * @author Jack Lei
- * @Time 2018年2月5日 下午7:14:49
  * @Email 895896736@qq.com
  */
 
@@ -35,15 +34,30 @@ public class JadeInvokeHandler implements InvocationHandler {
 		}
 		 
 		Annotation[] annotations = method.getAnnotations();
+		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+		
+		SQL sqlAnnotation = null;
+		
 		for (Annotation annotation : annotations) {
 			if(annotation instanceof SQL){
-				SQL sql = (SQL)annotation;
-				String sqlVal = sql.sql();
-				SQLType type = sql.type();
-				DataSourceService.query(sqlVal, Object.class);
-				System.out.println("sqlVal "+sqlVal);
+				sqlAnnotation = (SQL)annotation;
 			}
 		}
+		
+		
+		int length = parameterAnnotations.length;
+		SQLParam[] sqlParamList = new SQLParam[length];
+		for(int i = 0 ;i< length;i++){
+			Annotation[] anoArray  = parameterAnnotations[i];
+			for(Annotation an :anoArray){
+				if(an instanceof SQLParam){
+					sqlParamList[i] = (SQLParam)an;
+				}
+			}
+		}
+		
+		SQLParamContext methodParamNode = new SQLParamContext(sqlAnnotation,sqlParamList, args);
+		 
 		return null;
 	}
 

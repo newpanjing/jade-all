@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 /***
  * 
  * @author Jack Lei
- * @Time 2018年1月30日 下午9:10:55
  * @Email 895896736@qq.com
  */
 public class ClassUtil {

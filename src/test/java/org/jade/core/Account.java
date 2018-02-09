@@ -5,7 +5,6 @@ package org.jade.core;
 
 /**
  * @author Jack Lei
- * @Time 2018年2月5日 下午8:12:44
  * @Email 895896736@qq.com
  */
 

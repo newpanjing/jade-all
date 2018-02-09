@@ -12,8 +12,9 @@ import java.lang.annotation.Target;
 import org.jade.core.constrant.SQLType;
 
 /**
+ * 
+ * 具有执行SQL语句的能力
  * @author Jack Lei
- * @Time 2018年2月5日 下午7:24:55
  * @Email 895896736@qq.com
  */
 @Target(value=ElementType.METHOD)
@@ -21,7 +22,7 @@ import org.jade.core.constrant.SQLType;
 @Documented
 public @interface SQL {
 	
-	String sql();
+	String val();
 	
 	SQLType type();
 }
