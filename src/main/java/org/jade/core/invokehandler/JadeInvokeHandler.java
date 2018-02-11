@@ -10,8 +10,10 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import org.jade.core.api.SQL;
-import org.jade.core.api.SQLParam;
 import org.jade.core.domain.SQLParamContext;
+import org.jade.core.exception.SQLMakeException;
+import org.jade.core.iml.SqlMakerIml;
+import org.jade.db.DataSourceService;
 
 /**
  * @author Jack Lei
@@ -21,44 +23,34 @@ import org.jade.core.domain.SQLParamContext;
 public class JadeInvokeHandler implements InvocationHandler {
 
 	@Override
-	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+	public Object invoke(Object proxy, Method method, Object[] args) throws SQLMakeException {
 		Class<?> returnType = method.getReturnType();
-		 
 		Type genericReturnType = method.getGenericReturnType();
-		if(genericReturnType instanceof ParameterizedType){
+		Type[] actualTypeArguments = null;
+		if (genericReturnType instanceof ParameterizedType) {
 			ParameterizedType pt = (ParameterizedType) genericReturnType;
-			Type[] actualTypeArguments = pt.getActualTypeArguments();
-			for(Type type : actualTypeArguments){
-				 System.out.println(" return gen type "+ type);
-			}
+			actualTypeArguments = pt.getActualTypeArguments();
 		}
-		 
+
 		Annotation[] annotations = method.getAnnotations();
-		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-		
+
 		SQL sqlAnnotation = null;
-		
+
 		for (Annotation annotation : annotations) {
-			if(annotation instanceof SQL){
-				sqlAnnotation = (SQL)annotation;
+			if (annotation instanceof SQL) {
+				sqlAnnotation = (SQL) annotation;
 			}
 		}
-		
-		
-		int length = parameterAnnotations.length;
-		SQLParam[] sqlParamList = new SQLParam[length];
-		for(int i = 0 ;i< length;i++){
-			Annotation[] anoArray  = parameterAnnotations[i];
-			for(Annotation an :anoArray){
-				if(an instanceof SQLParam){
-					sqlParamList[i] = (SQLParam)an;
-				}
-			}
+		if (sqlAnnotation == null) {
+			throw new SQLMakeException(String.format("%s的 %s方法,未加@SQL注解", proxy, method.getName()));
 		}
-		
-		SQLParamContext methodParamNode = new SQLParamContext(sqlAnnotation,sqlParamList, args);
-		 
-		return null;
+		SQLParamContext methodParamNode = new SQLParamContext(sqlAnnotation, args);
+		try {
+			String sql = SqlMakerIml.INSTANCE.make(methodParamNode);
+			return DataSourceService.execute(sqlAnnotation.type(), sql, returnType, actualTypeArguments);
+		} catch (SQLMakeException ex) {
+			throw ex;
+		}
 	}
 
 }

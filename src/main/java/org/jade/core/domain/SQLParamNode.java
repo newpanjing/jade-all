@@ -6,15 +6,15 @@ package org.jade.core.domain;
 import org.jade.core.constrant.SQLParamType;
 
 /**
- * 参数对象
+ * 
+ * <pre>
+ * 在SQL注解中的sql模板中的可变参数的包装类，支持的可变参数类型如下:
  * <ul>
- * <li>只解析等于号后面的，以'{'开始,以'}'结束
+ * <li>%s</li>
+ * <li>%d</li>
  * </ul>
- * 
- * 
- * 
- * 
- * " Select * from Account where id={1} and name = {2} "
+ * @see {@link SQLParamType}
+ * </pre>
  * 
  * @author Jack Lei
  * @Email 895896736@qq.com
@@ -36,5 +36,5 @@ public class SQLParamNode {
 	public String toString() {
 		return "SQLParamNode [type=" + type + "]";
 	}
-	
+
 }

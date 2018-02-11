@@ -1,0 +1,7 @@
+@startuml
+Application->DB: 1.应用层与数据库建立socket连接
+Application->DB: 2.应用层通过建立的socket连接，将 增 /删/ 改/查的请求，提交到数据给数据库处理
+DB-->Application:3.处理 增 /删/ 改/查的请求，将处理的结果返回给应用层
+DB->DB:4.释放资源
+Application->Application:5.收到数据库的返回后，处理相应的逻辑 
+@enduml

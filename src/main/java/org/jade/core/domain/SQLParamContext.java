@@ -4,9 +4,17 @@
 package org.jade.core.domain;
 
 import org.jade.core.api.SQL;
-import org.jade.core.api.SQLParam;
 
 /**
+ * 
+ * <pre>
+ * SQL语句参数的上下文,包含如下
+ * <ul>
+ * <li>SQL注解</li>
+ * <li>加了SQL注解这个方法的所有参数</li> 
+ * </ul>
+ * </pre>
+ * 
  * @author Jack Lei
  * @Email 895896736@qq.com
  */
@@ -14,9 +22,7 @@ import org.jade.core.api.SQLParam;
 public class SQLParamContext {
 
 	private SQL sqlAnnotation;
-	
-	private SQLParam[] methodParamAnnotations;
-	
+
 	private Object[] methodParams;
 
 	/**
@@ -24,10 +30,9 @@ public class SQLParamContext {
 	 * @param methodParamAnnotations
 	 * @param methodParams
 	 */
-	public SQLParamContext(SQL sqlAnnotation, SQLParam[] methodParamAnnotations, Object[] methodParams) {
+	public SQLParamContext(SQL sqlAnnotation, Object[] methodParams) {
 		super();
 		this.sqlAnnotation = sqlAnnotation;
-		this.methodParamAnnotations = methodParamAnnotations;
 		this.methodParams = methodParams;
 	}
 
@@ -35,12 +40,17 @@ public class SQLParamContext {
 		return sqlAnnotation;
 	}
 
-	public SQLParam[] getMethodParamAnnotations() {
-		return methodParamAnnotations;
-	}
-
 	public Object[] getMethodParams() {
 		return methodParams;
 	}
-	
+
+	public String methodParamToString() {
+		StringBuilder sb = new StringBuilder();
+		if (this.methodParams != null) {
+			for (Object obj : this.methodParams) {
+				sb.append(obj.toString());
+			}
+		}
+		return sb.toString();
+	}
 }

@@ -4,6 +4,7 @@
 package org.jade.core.api;
 
 import org.jade.core.domain.SQLParamContext;
+import org.jade.core.exception.SQLMakeException;
 
 /**
  * <pre>
@@ -18,6 +19,6 @@ import org.jade.core.domain.SQLParamContext;
  */
 public interface ISqlMaker {
 	
-	String make(SQLParamContext context);
+	String make(SQLParamContext context) throws SQLMakeException;
 	
 }

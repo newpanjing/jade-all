@@ -7,9 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
-import org.jade.core.Account;
 import org.jade.core.AccountDAO;
 
 import junit.framework.TestCase;
@@ -24,7 +22,7 @@ public class DataSourceTest extends TestCase {
 
 	public static void main(String[] args) {
 		
-		List<Account> test = dao.test();
+		 dao.test();
 	}
 
 	public static void testQuery() {
