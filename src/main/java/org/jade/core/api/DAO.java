@@ -12,7 +12,18 @@ import java.lang.annotation.Target;
 /**
  * 
  * 
- * 具有SQL语句的执行能力
+ * 
+ * <pre>
+ * <ul>
+ * <b>DAO服务：抽象了应用层与数据库交互的<b>
+ * <li>
+ *在方法添加{@link SQL}}注解，具有SQL语句的执行能力 
+ * </li>
+ * <li>
+ *Jade启动时会注册,加了DAO的接口
+ * </li>
+ * </ul>
+ * </pre>
  * @author Jack Lei
  * @Email 895896736@qq.com
  */

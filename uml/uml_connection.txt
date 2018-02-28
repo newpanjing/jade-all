@@ -1,0 +1,19 @@
+@startuml
+note left of DriverManager:获取数据库连接的流程
+DriverManager->DriverManager:1.调用getConnection方法
+DriverManager->NonRegisteringDriver
+NonRegisteringDriver->NonRegisteringDriver:2.调用connect方法
+NonRegisteringDriver->ConnectionImpl
+ConnectionImpl->ConnectionImpl:3.调用getInstance方法
+ConnectionImpl->Util
+Util->Util:4.调用handleNewInstance方法
+Util->JDBC4Connection:5.实例化JDBC4Connection
+JDBC4Connection->JDBC4Connection:6.调用createNewIO方法
+JDBC4Connection->JDBC4Connection:7.调用coreConnect方法
+JDBC4Connection->MysqlIO:8.创建MysqlIO对象,MysqlIO对象抽象了java应用层与数据库的连接
+MysqlIO->MysqlIO:进入构造方法
+MysqlIO->MysqlIO:9.StandardSocketFactory调用connect方法创建与数据库服务器的socket连接
+MysqlIO-->JDBC4Connection:
+NonRegisteringDriver<--JDBC4Connection:10返回JDBC4Connection对象
+NonRegisteringDriver-->DriverManager:11.与数据库建立socket连接，返回JDBC4Connection对象
+@enduml

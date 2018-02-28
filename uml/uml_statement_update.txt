@@ -1,0 +1,14 @@
+@startuml
+note left of JDBC4Connection:executeUpdate方法流程
+JDBC4Connection->JDBC4Connection:1.调用createStatement方法
+JDBC4Connection->StatementImpl:2.创建StatementImpl对象
+StatementImpl->StatementImpl:3.调用executeUpdate，这个方法加了对象锁，同一时间只会执行一个操作
+JDBC4Connection->JDBC4Connection:4.调用ConnectionImpl的execSQL方法，这个方法加了锁，保证了原子性
+JDBC4Connection->MysqlIO
+MysqlIO->MysqlIO:5.调用MysqlIO的sqlQueryDirect方法
+MysqlIO->MysqlIO:6.调用sendCommand方法,将SQL按照协议规则包装成buffer对象，设置超时时间
+MysqlIO->DB:7.调用send方法，使用mysqlOutput对象，将buffer对象写到数据库服务器
+MysqlIO->MysqlIO:8.等数据库服务器返回数据
+DB-->MysqlIO:9.返回数据
+MysqlIO-->JDBC4Connection:向应用层返回数据
+@enduml

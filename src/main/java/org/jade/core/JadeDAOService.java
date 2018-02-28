@@ -12,7 +12,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /***
- * DAO 服务
+ *<pre>
+ *<ul>
+ *<B>DAO 服务<B>
+ *<li>注册DAO服务，参见{@link #registerDao(String)}
+ *<p>
+ *加载指定包名下的所有加了DAO注解的接口，并且给这个接口动态绑定代理类<code>JadeInvokeHandler</code>
+ *<p>
+ *</li>
+ *<li>
+ *数据库交互交给{@link JadeInvokeHandler}处理
+ *</li>
+ *<li>提供DAO的获取,参见{@link #getDao(Class)}}</li>
+ *</ul>
+ *</pre>
+ * 
  * @author Jack Lei
  * @Email 895896736@qq.com
  */
