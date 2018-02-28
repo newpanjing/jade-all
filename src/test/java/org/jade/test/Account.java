@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jade.core;
+package org.jade.test;
 
 /**
  * @author Jack Lei

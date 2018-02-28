@@ -19,6 +19,11 @@ import org.slf4j.LoggerFactory;
 public class ClassUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger("classutil");
 
+	/***
+	 * 根据包名查询class
+	 * @param packageName
+	 * @return
+	 */
 	public static List<Class<?>> findClassByPackagName(String packageName) {
 		List<Class<?>> classesList = new ArrayList<>();
 		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
@@ -33,42 +38,41 @@ public class ClassUtil {
 				packageDirList.add(file);
 			}
 			for (String filePath : packageDirList) {
-				List<String> findclass = findClassByDir(packageName, filePath);
-				if (!findclass.isEmpty()) {
-					classNameList.addAll(findclass);
-				}
+				 findClassByDir(packageName, filePath,classNameList);
 			}
-
-		} catch (IOException e) {
+			for(String className: classNameList){
+				Class<?> clazz = Class.forName(className);
+				classesList.add(clazz);
+			}
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return classesList;
 	}
 
-	/**
+	/***
+	 * 根据文件目录查询class
 	 * @param packageName
-	 * @param classNameList
 	 * @param filePath
+	 * @param classNameList
 	 */
-	private static List<String> findClassByDir(String packageName, String filePath) {
-		List<String> classNameList = new LinkedList<>();
+	private static void findClassByDir(String packageName, String filePath,List<String> classNameList) {
 		File fileDir = new File(filePath);
 		File[] listFiles = fileDir.listFiles();
 		for (File file : listFiles) {
 			if (file.isDirectory()) {
-				findClassByDir(packageName, file.getAbsolutePath());
+				findClassByDir(packageName+"."+file.getName(), file.getAbsolutePath(),classNameList);
 			} else {
 				String name = file.getName();
 				if (name.endsWith(".class")) {
 					String className = packageName + "." + name.substring(0, name.length() - 6);
 					classNameList.add(className);
-					LOGGER.info("find class{} ", className);
+					LOGGER.info("find class {} ", className);
 				} else {
 
 				}
 			}
 		}
-		return classNameList;
 	}
 
 	public static void main(String[] args) {
