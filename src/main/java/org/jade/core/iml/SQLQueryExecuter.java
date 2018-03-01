@@ -53,7 +53,13 @@ public class SQLQueryExecuter implements ISQLExecuter {
 		Statement statement = param.getStatement();
 		Class<?> returnType = param.getReturnType();
 		Type[] actualTypeArguments = param.getActualTypeArguments();
-		ResultSet resultSet = statement.executeQuery(sql);
+		ResultSet resultSet = null;
+		try {
+			resultSet = statement.executeQuery(sql);
+		} catch (Exception ex) {
+			LOGGER.error("SQLQueryExecuter 执行executeQuery异常，sql = {}", sql);
+			throw ex;
+		}
 
 		if (returnType == List.class) {
 			List returnObjInstance = new LinkedList<>();

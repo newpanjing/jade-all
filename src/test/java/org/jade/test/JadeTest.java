@@ -19,7 +19,7 @@ public class JadeTest {
 		//System.out.println("deleteById "+deleteById);
 		// int updateById = dao.updateById(2, "leixuan");
 		// System.out.println("updateById "+ updateById);
-		int insert = dao.insert(10, "inserter");
+		int insert = dao.insert(11, "inserter");
 		System.out.println("insert "+insert);
 		
 	}
