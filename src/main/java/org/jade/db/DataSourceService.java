@@ -11,7 +11,10 @@ import java.sql.Statement;
 import org.jade.core.constrant.SQLType;
 import org.jade.core.domain.SQLExecuterParam;
 import org.jade.core.exception.SQLExecuteException;
+import org.jade.core.iml.SQLIUDExecuter;
 import org.jade.core.iml.SQLQueryExecuter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Jack Lei
@@ -19,22 +22,25 @@ import org.jade.core.iml.SQLQueryExecuter;
  */
 
 public class DataSourceService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceService.class);
 
 	public static Object execute(SQLType type, String sql, Class<?> returnType, Type[] actualTypeArguments) {
 		Connection connection = null;
 		Statement statement = null;
+		LOGGER.debug("Execute Sql {}",sql);
 		try {
 			connection = DataSourceManager.getInstance().getConnection();
 			statement = connection.createStatement();
+			SQLExecuterParam param = new SQLExecuterParam(statement, sql, returnType, actualTypeArguments);
 			switch (type) {
 			case DELETE:
-				break;
+				return SQLIUDExecuter.INSTANCE.execute(param);
 			case INSERT:
-				break;
-			case SELECT:
-				return SQLQueryExecuter.INSTANCE.execute(new SQLExecuterParam(statement, sql, returnType, actualTypeArguments));
+				return SQLIUDExecuter.INSTANCE.execute(param);
 			case UPDATE:
-				break;
+				return SQLIUDExecuter.INSTANCE.execute(param);
+			case SELECT:
+				return SQLQueryExecuter.INSTANCE.execute(param);
 			default:
 				break;
 			}

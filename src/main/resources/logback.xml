@@ -29,7 +29,7 @@
 		<appender-ref ref="FILE"></appender-ref>
 	</logger>
 
-	<root>
+	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

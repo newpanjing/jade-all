@@ -54,7 +54,7 @@ public class SQLQueryExecuter implements ISQLExecuter {
 		Class<?> returnType = param.getReturnType();
 		Type[] actualTypeArguments = param.getActualTypeArguments();
 		ResultSet resultSet = statement.executeQuery(sql);
-		
+
 		if (returnType == List.class) {
 			List returnObjInstance = new LinkedList<>();
 			Type type = actualTypeArguments[0];
@@ -65,23 +65,27 @@ public class SQLQueryExecuter implements ISQLExecuter {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			while(resultSet.next()){
-				returnObjInstance.add( convert2JavaObj(javaObjClazz, resultSet));
+			while (resultSet.next()) {
+				returnObjInstance.add(convert2JavaObj(javaObjClazz, resultSet));
 			}
 			return returnObjInstance;
 		} else if (returnType == Map.class) {
+			LOGGER.error("暂时不支持Map的转换");
 			return null;
 		} else if (returnType == Set.class) {
+			LOGGER.error("暂时不支持Set的转换");
 			return null;
 		} else {
 			Object returnObjInstance = null;
-			try {
-				returnObjInstance = returnType.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				e.printStackTrace();
-			}
-			while (resultSet.next()) {
-				returnObjInstance =	convert2JavaObj(returnType, resultSet);
+			if (resultSet.next()) {
+				do {
+					try {
+						returnObjInstance = returnType.newInstance();
+					} catch (InstantiationException | IllegalAccessException e) {
+						e.printStackTrace();
+					}
+					returnObjInstance = convert2JavaObj(returnType, resultSet);
+				} while (resultSet.next());
 			}
 			return returnObjInstance;
 		}

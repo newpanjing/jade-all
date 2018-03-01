@@ -1,7 +1,5 @@
 package org.jade.test;
 
-import java.util.List;
-
 import org.jade.core.JadeBootstrap;
 import org.jade.core.JadeDAOService;
 
@@ -15,6 +13,14 @@ public class JadeTest {
 //		System.out.println("query List "+ queryList);
 //		Account queryById = dao.queryById(1);
 //		System.out.println("queryById "+ queryById);
-		dao.queryById2(1, "2");
+//		Account queryById2 = dao.queryById2(1, "2");
+//		System.out.println("queryById2 "+ queryById2);
+		//int deleteById = dao.deleteById(1);
+		//System.out.println("deleteById "+deleteById);
+		// int updateById = dao.updateById(2, "leixuan");
+		// System.out.println("updateById "+ updateById);
+		int insert = dao.insert(10, "inserter");
+		System.out.println("insert "+insert);
+		
 	}
 }

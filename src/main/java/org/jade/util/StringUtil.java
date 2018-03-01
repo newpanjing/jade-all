@@ -3,13 +3,8 @@
  */
 package org.jade.util;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.jade.core.constrant.SQLParamType;
-import org.jade.core.domain.SQLParamNode;
 
 /**
  * @author Jack Lei
@@ -21,10 +16,9 @@ public class StringUtil {
 	private static final String END_LINE = "\n";
 	private static final String TAB = "\t";
 
-	private static final char[] UPPER = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-	private static final char[] LOWER = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-			'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+	private static final char[] UPPER = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M','N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+	private static final char[] LOWER = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm','n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+	private static final char[] DIGIT = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
 	public static String format(String template, Object... args) {
 		return String.format(template, args);
@@ -104,15 +98,26 @@ public class StringUtil {
 		return false;
 	}
 
+	public static boolean checkIsDigit(char ch) {
+		for (char c : DIGIT) {
+			if (ch == c) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/****
 	 * 查询一个字符串 在另一个字符串出现的次数
 	 * 
-	 * @param source 源字符串
-	 * @param regexStr 查找的字符串
+	 * @param source
+	 *            源字符串
+	 * @param regexStr
+	 *            查找的字符串
 	 * @return
 	 */
 	public static int findStrCount(String source, String regexStr) {
-		String regex = "[^0-9a-zA-Z]"+regexStr+"[^0-9a-zA-Z]";
+		String regex = "\\b" + regexStr + "\\b";
 		Pattern expression = Pattern.compile(regex);
 		Matcher matcher = expression.matcher(source);
 		int n = 0;
@@ -123,11 +128,9 @@ public class StringUtil {
 	}
 
 	public static void main(String[] args) {
-		// List<SQLParamNode> findParamFromSql = findParamNodeFromSql(" Select *
-		// from Account where id=%d and name = %s ");
-		// System.out.println(findParamFromSql);
-		String format = String.format("Select * from Account where Id =  and id linke '%%'", 1, 1);
-		System.out.println(format);
+
+		String source = " Update Account set name = #NAME# where id = ID ";
+		System.out.println(findStrCount(source, "NAME"));
 	}
 
 }

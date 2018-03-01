@@ -16,7 +16,7 @@ import org.jade.core.api.SQLParam;
 import org.jade.core.domain.SQLParamContext;
 import org.jade.core.exception.SQLMakeException;
 import org.jade.core.iml.SqlMakerIml;
-import org.jade.db.DataSourceService;import com.sun.xml.internal.bind.v2.model.annotation.AnnotationReader;
+import org.jade.db.DataSourceService;
 
 /**
  *<pre>
@@ -76,8 +76,7 @@ public class JadeInvokeHandler implements InvocationHandler {
 		
 		SQLParamContext methodParamNode = new SQLParamContext(method,sqlAnnotation, args,sqlParamAnnoList);
 		try {
-			SqlMakerIml.INSTANCE.make(methodParamNode);
-			String sql = "";
+			String sql =SqlMakerIml.INSTANCE.make(methodParamNode);
 			return DataSourceService.execute(sqlAnnotation.type(), sql, returnType, actualTypeArguments);
 		} catch (SQLMakeException ex) {
 			throw ex;
