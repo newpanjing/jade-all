@@ -34,7 +34,7 @@ Jade,是Java应用程序访问Mysql数据库的一个小框架.
 
 **简单调用示例**
 <ul>
-	<li>jade-all\jar\jade.jar</li>
+	<li>引入jade-all\jar\jade.jar</li>
 	<li>设置src/main/resource/db.properties文件</li>
 	<li>调用JadeBootstrap.start方法，启动jade服务</li>
 	<li>应用层实现DAO规范</li>

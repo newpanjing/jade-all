@@ -59,6 +59,9 @@ public class ClassUtil {
 	private static void findClassByDir(String packageName, String filePath,List<String> classNameList) {
 		File fileDir = new File(filePath);
 		File[] listFiles = fileDir.listFiles();
+		if(listFiles==null){
+			return;
+		}
 		for (File file : listFiles) {
 			if (file.isDirectory()) {
 				findClassByDir(packageName+"."+file.getName(), file.getAbsolutePath(),classNameList);

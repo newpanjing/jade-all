@@ -1,0 +1,7 @@
+@startuml
+JavaApplication-> DAO
+DAO -> Jade:1.Implement jdade specification
+Jade -> DataServer:2.Commit sql request
+DataServer-->Jade:3.Return result
+Jade-->DAO:4.To convert a database object to a Java object\n according to the DAO specification
+@enduml
