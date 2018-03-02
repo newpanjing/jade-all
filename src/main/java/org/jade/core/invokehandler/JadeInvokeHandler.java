@@ -8,12 +8,14 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jade.core.api.SQL;
 import org.jade.core.api.SQLParam;
 import org.jade.core.domain.SQLParamContext;
+import org.jade.core.exception.SQLExecuteException;
 import org.jade.core.exception.SQLMakeException;
 import org.jade.core.iml.SqlMakerIml;
 import org.jade.db.DataSourceService;
@@ -38,7 +40,7 @@ import org.jade.db.DataSourceService;
 public class JadeInvokeHandler implements InvocationHandler {
 
 	@Override
-	public Object invoke(Object proxy, Method method, Object[] args) throws SQLMakeException {
+	public Object invoke(Object proxy, Method method, Object[] args) throws SQLMakeException, SQLException, SQLExecuteException {
 		Class<?> returnType = method.getReturnType();
 		Type genericReturnType = method.getGenericReturnType();
 		// 方法返回类型的泛型数组

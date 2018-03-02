@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class DataSourceService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceService.class);
 
-	public static Object execute(SQLType type, String sql, Class<?> returnType, Type[] actualTypeArguments) {
+	public static Object execute(SQLType type, String sql, Class<?> returnType, Type[] actualTypeArguments) throws SQLException,SQLExecuteException {
 		Connection connection = null;
 		Statement statement = null;
 		LOGGER.debug("Execute Sql {}",sql);
@@ -46,9 +46,9 @@ public class DataSourceService {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw e;
 		} catch (SQLExecuteException e) {
-			e.printStackTrace();
+			throw e;
 		} finally {
 			try {
 				if (statement != null) {
@@ -59,7 +59,7 @@ public class DataSourceService {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw e;
 			}
 		}
 		return null;
