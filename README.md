@@ -25,12 +25,13 @@ Jade,是Java应用程序访问Mysql数据库的一个小框架.
      |JavaApplication|          |DAO|                                           |Jade|             |DataServer|
      `---------------'          `---'                                           `----'             `----------'
 </code></pre>
-**快速开始**
-<ul>工程依赖：
+**工程依赖**
+<ul>
 <li>JDK1.7或更高版本</li>
 <li>Maven3.x</li>
 <li></li>
 </ul>
+
 **简单调用示例**
 <ul>
 	<li>jade-all\jar\jade.jar</li>
@@ -38,6 +39,7 @@ Jade,是Java应用程序访问Mysql数据库的一个小框架.
 	<li>调用JadeBootstrap.start方法，启动jade服务</li>
 	<li>应用层实现DAO规范</li>
 </ul>
+
 **实现Jade的DAO规范**
 <pre><code>
 @DAO
@@ -92,8 +94,8 @@ public class Account {
 </code>
 </pre>
 
-<pre><code>
 **测试增删改查**
+<pre><code>
 public class JadeTest {
 	public static void main(String[] args) {
 		JadeBootstrap.start("org.jade");
