@@ -54,9 +54,9 @@ maxWait=-1
 </code>
 		</pre>
 	</li>
-	<li>调用JadeBootstrap.start方法，传入的路径参数。Jade扫描这个路径下的DAO，Jade会注册这些DAO服务</li>
 	<li>应用层实现DAO规范</li>
-	<li>参考org.jade.example目录下的例子</li>
+	<li>调用JadeBootstrap.start方法，传入的路径参数。Jade扫描这个路径下的DAO，Jade会注册这些DAO服务</li>
+	<li>具体参考org.jade.example目录下的例子</li>
 </ul>
 
 **实现Jade的DAO规范**
