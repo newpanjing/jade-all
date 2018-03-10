@@ -35,13 +35,11 @@ Jade,是Java应用程序访问Mysql数据库的一个小框架.
 **简单调用示例**
 <ul>
 	<li>添加如下依赖:
-	<pre>
 		<dependency>
 			<groupId>com.github.leixuan6</groupId>
 			<artifactId>jade-all</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-	<pre>
 	</li>
 	<li>设置src/main/resource/db.properties文件
 		<pre>
