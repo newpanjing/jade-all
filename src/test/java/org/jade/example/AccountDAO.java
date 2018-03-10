@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jade.test;
+package org.jade.example;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public interface AccountDAO {
 	@SQL(val="Select * from Account Where id = ID",type = SQLType.SELECT)
 	Account queryById(@SQLParam("ID")int id);
 	
-	@SQL(val="Select * from Account Where id =ID and name =NAME",type = SQLType.SELECT)
+	@SQL(val="Select * from Account Where id =ID and name ='NAME'",type = SQLType.SELECT)
 	Account queryById2(@SQLParam("ID")int id,@SQLParam("NAME")String name);
 	
 	@SQL(val="Delete From Account where id = ID",type=SQLType.INSERT)

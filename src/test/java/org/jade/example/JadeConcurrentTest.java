@@ -1,4 +1,4 @@
-package org.jade.test;
+package org.jade.example;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

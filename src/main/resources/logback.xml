@@ -10,14 +10,14 @@
 		</encoder>
 	</appender>
 
-	<appender name="FILE"
+	<appender name="ClassUtil_FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/classutil.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>logs/classutil-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
-		<encoder><!-- 必须指定，否则不会往文件输出内容 -->
+		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
 			</pattern>
 		</encoder>
@@ -25,8 +25,8 @@
 		<prudent>false</prudent>
 	</appender>
 
-	<logger name="classutil" level="INFO" addtivity="false">
-		<appender-ref ref="FILE"></appender-ref>
+	<logger name="ClassUtil" level="INFO" addtivity="false">
+		<appender-ref ref="ClassUtil_FILE"></appender-ref>
 	</logger>
 
 	<root level="DEBUG">

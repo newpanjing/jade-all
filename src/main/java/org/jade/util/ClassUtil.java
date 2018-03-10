@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @Email 895896736@qq.com
  */
 public class ClassUtil {
-	private static final Logger LOGGER = LoggerFactory.getLogger("classutil");
+	private static final Logger LOGGER = LoggerFactory.getLogger("ClassUtil");
 
 	/***
 	 * 根据包名查询class

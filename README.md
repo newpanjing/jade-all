@@ -29,15 +29,36 @@ Jade,是Java应用程序访问Mysql数据库的一个小框架.
 <ul>
 <li>JDK1.7或更高版本</li>
 <li>Maven3.x</li>
-<li></li>
+<li>MySql数据库服务器</li>
 </ul>
 
 **简单调用示例**
 <ul>
-	<li>引入jade-all\jar\jade.jar</li>
-	<li>设置src/main/resource/db.properties文件</li>
-	<li>调用JadeBootstrap.start方法，启动jade服务</li>
+	<li>添加如下依赖:
+	<pre><code>
+		<dependency>
+			<groupId>com.github.leixuan6</groupId>
+			<artifactId>jade-all</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</code><pre>
+	</li>
+	<li>设置src/main/resource/db.properties文件
+		<pre>
+			<code>
+			driverClassName=com.mysql.jdbc.Driver
+			url=jdbc:mysql://127.0.0.1/jade?characterEncoding=UTF-8
+			username=root
+			password=123456
+			maxTotal=1
+			maxIdle=1
+			maxWait=-1
+			</code>
+		</pre>
+	</li>
+	<li>调用JadeBootstrap.start方法，传入的路径参数。Jade扫描这个路径下的DAO，Jade会注册这些DAO服务</li>
 	<li>应用层实现DAO规范</li>
+	<li>参考org.jade.example目录下的例子</li>
 </ul>
 
 **实现Jade的DAO规范**
