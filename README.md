@@ -42,16 +42,16 @@ Jade,是Java应用程序访问Mysql数据库的一个小框架.
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre>
 	</li>
 	<li>设置src/main/resource/db.properties文件
-		<pre>
-			<code>
-			driverClassName=com.mysql.jdbc.Driver
-			url=jdbc:mysql://127.0.0.1/jade?characterEncoding=UTF-8
-			username=root
-			password=123456
-			maxTotal=1
-			maxIdle=1
-			maxWait=-1
-			</code>
+<pre>
+<code>
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://127.0.0.1/jade?characterEncoding=UTF-8
+username=root
+password=123456
+maxTotal=1
+maxIdle=1
+maxWait=-1
+</code>
 		</pre>
 	</li>
 	<li>调用JadeBootstrap.start方法，传入的路径参数。Jade扫描这个路径下的DAO，Jade会注册这些DAO服务</li>
