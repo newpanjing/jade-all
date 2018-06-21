@@ -8,17 +8,16 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jade.core.api.SQL;
 import org.jade.core.api.SQLParam;
 import org.jade.core.domain.SQLParamContext;
-import org.jade.core.exception.SQLExecuteException;
 import org.jade.core.exception.SQLMakeException;
-import org.jade.core.iml.SqlMakerIml;
 import org.jade.db.DataSourceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <pre>
@@ -38,10 +37,10 @@ import org.jade.db.DataSourceService;
  */
 
 public class JadeInvokeHandler implements InvocationHandler {
+	private static final Logger LOGGER = LoggerFactory.getLogger(JadeInvokeHandler.class);
 
 	@Override
-	public Object invoke(Object proxy, Method method, Object[] args) throws SQLMakeException, SQLException, SQLExecuteException {
-		Class<?> returnType = method.getReturnType();
+	public Object invoke(Object proxy, Method method, Object[] args) {
 		Type genericReturnType = method.getGenericReturnType();
 		// 方法返回类型的泛型数组
 		Type[] actualTypeArguments = null;
@@ -61,7 +60,7 @@ public class JadeInvokeHandler implements InvocationHandler {
 			}
 		}
 		if (sqlAnnotation == null) {
-			throw new SQLMakeException(String.format("%s的 %s方法,未加@SQL注解", proxy, method.getName()));
+			LOGGER.error("{}的{}方法,未加@SQL注解", proxy, method.getName());
 		}
 
 		// 获取方法参数里的注解
@@ -77,14 +76,8 @@ public class JadeInvokeHandler implements InvocationHandler {
 			}
 		}
 
-		SQLParamContext methodParamNode = new SQLParamContext(method, sqlAnnotation, args, sqlParamAnnoList);
-		String sql =null;
-		try {
-			sql = SqlMakerIml.INSTANCE.make(methodParamNode);
-		} catch (SQLMakeException ex) {
-			throw ex;
-		}
-		return DataSourceService.execute(sqlAnnotation.type(), sql, returnType, actualTypeArguments);
+		SQLParamContext context = new SQLParamContext(method, sqlAnnotation, args, sqlParamAnnoList,actualTypeArguments);
+		return DataSourceService.execute(context);
 	}
 
 }

@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 import org.jade.core.api.ISQLExecuter;
 import org.jade.core.constrant.SQLType;
-import org.jade.core.domain.SQLExecuterParam;
+import org.jade.core.domain.SQLExecuterContext;
 import org.jade.core.exception.SQLExecuteException;
 import org.jade.util.StringUtil;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class SQLQueryExecuter implements ISQLExecuter {
 	public static final SQLQueryExecuter INSTANCE = new SQLQueryExecuter();
 
 	private SQLQueryExecuter() {
+
 	}
 
 	@Override
@@ -48,19 +50,13 @@ public class SQLQueryExecuter implements ISQLExecuter {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public Object execute(SQLExecuterParam param) throws SQLException, SQLExecuteException {
-		String sql = param.getSql();
-		Statement statement = param.getStatement();
+	public Object execute(SQLExecuterContext param) throws SQLException  {
+		PreparedStatement statement = param.getStatement();
 		Class<?> returnType = param.getReturnType();
 		Type[] actualTypeArguments = param.getActualTypeArguments();
 		ResultSet resultSet = null;
-		try {
-			resultSet = statement.executeQuery(sql);
-		} catch (Exception ex) {
-			LOGGER.error("SQLQueryExecuter 执行executeQuery异常，sql = {}", sql);
-			throw ex;
-		}
 
+		resultSet = statement.executeQuery();
 		if (returnType == List.class) {
 			List returnObjInstance = new LinkedList<>();
 			Type type = actualTypeArguments[0];

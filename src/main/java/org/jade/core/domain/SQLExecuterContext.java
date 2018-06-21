@@ -4,9 +4,10 @@
 package org.jade.core.domain;
 
 import java.lang.reflect.Type;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 import org.jade.core.api.ISQLExecuter;
+
 
 /**
  * <pre>
@@ -17,24 +18,25 @@ import org.jade.core.api.ISQLExecuter;
  * @Email 895896736@qq.com
  */
 
-public class SQLExecuterParam {
-	private Statement statement;
-	
+public class SQLExecuterContext {
+	private PreparedStatement statement;
+
 	private String sql;
-	
+
 	private Class<?> returnType;
-	
+
 	private Type[] actualTypeArguments;
 
-	public SQLExecuterParam(Statement statement, String sql, Class<?> returnType, Type[] actualTypeArguments) {
+	public SQLExecuterContext(java.sql.PreparedStatement prepareStatement, String sql, Class<?> returnType,
+			Type[] actualTypeArguments) {
 		super();
-		this.statement = statement;
+		this.statement = prepareStatement;
 		this.sql = sql;
 		this.returnType = returnType;
 		this.actualTypeArguments = actualTypeArguments;
 	}
 
-	public Statement getStatement() {
+	public PreparedStatement getStatement() {
 		return statement;
 	}
 
@@ -48,6 +50,6 @@ public class SQLExecuterParam {
 
 	public Type[] getActualTypeArguments() {
 		return actualTypeArguments;
-	} 
+	}
 
 }

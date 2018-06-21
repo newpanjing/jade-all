@@ -17,17 +17,15 @@ import org.jade.core.constrant.SQLType;
  * <li>填写被执行的SQL语句</li>
  * <li>支持参数
  *     <ul>参数定义的方式
- *     <li>参数模板，占位符是在SQLParam中的value</li>
- *     <li>参数列表，参数是加了这个注解的方法中的参数</li>
+ *     <li>方法参数列表中，参数将被{@link PreparedStatement}调用setXXX方法，按方法参数列表中的顺序进行参数设置</li>
  *     <li>举例
- *         @SQL("Select * from Table Where Id = ID")
- *         void query(@SQLParam(value="ID")int id);
- *         底层解析时，
+ *         @SQL("Select * from Table Where Id = ?")
+ *         void query(int id);
+ *       
  *         假设调用 query(6);
- *         String str = Select * from Table Where Id = ID;
- *         //sql替换： 将 sql中， 包含SQLParam里的值，替换为方法参数的值
- *         str.replace(ID,id);
- *         str = Select * from Table Where Id = 6;
+ *         底层处理：
+ *         PreparedStatement pre;
+ *         pre.setInt(1, 6); 
  *     <li>
  *     </ul>
  * </li>

@@ -4,6 +4,7 @@
 package org.jade.core.domain;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.jade.core.api.SQL;
@@ -34,14 +35,17 @@ public class SQLParamContext {
 	private Object[] methodParams;
 	
 	private List<SQLParam> sqlParamAnnoList;
-
-
-	public SQLParamContext(Method method,SQL sqlAnnotation, Object[] methodParams, List<SQLParam> sqlParamAnnoList) {
+	
+	private Type[] actualTypeArguments ;
+ 
+	public SQLParamContext(Method method, SQL sqlAnnotation, Object[] methodParams, List<SQLParam> sqlParamAnnoList,
+			Type[] actualTypeArguments) {
 		super();
+		this.method = method;
 		this.sqlAnnotation = sqlAnnotation;
 		this.methodParams = methodParams;
 		this.sqlParamAnnoList = sqlParamAnnoList;
-		this.method = method;
+		this.actualTypeArguments = actualTypeArguments;
 	}
 
 	public SQL getSqlAnnotation() {
@@ -59,12 +63,17 @@ public class SQLParamContext {
 	public Method getMethod() {
 		return method;
 	}
+	
+
+	public Type[] getActualTypeArguments() {
+		return actualTypeArguments;
+	}
 
 	public String methodParamToString() {
 		StringBuilder sb = new StringBuilder();
 		if (this.methodParams != null) {
 			for (Object obj : this.methodParams) {
-				sb.append(obj.toString());
+				sb.append(obj.toString() +" ");
 			}
 		}
 		return sb.toString();
