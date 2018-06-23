@@ -16,6 +16,7 @@ public class JadeConcurrentTest {
 			e1.printStackTrace();
 		}
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while (true) {
 					queryById2(dao);
@@ -29,6 +30,7 @@ public class JadeConcurrentTest {
 		},"T#1").start();
 		
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while (true) {
 					updateById(dao);
@@ -43,6 +45,7 @@ public class JadeConcurrentTest {
 		
 		new Thread(new Runnable() {
 			AtomicInteger i = new AtomicInteger(10000);
+			@Override
 			public void run() {
 				while (true) {
 					insert(dao,i.getAndIncrement());
@@ -56,6 +59,7 @@ public class JadeConcurrentTest {
 		},"T#3").start();
 		
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				while (true) {
 					queryList(dao);
@@ -70,7 +74,7 @@ public class JadeConcurrentTest {
 	}
 
 	private static void insert(AccountDAO dao,int id) {
-		  dao.insert(id, "inserter");
+		 // dao.insert(id, "inserter");
 	}
 
 	private static void updateById(AccountDAO dao) {
