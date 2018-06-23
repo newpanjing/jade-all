@@ -6,6 +6,7 @@ package org.jade.core.domain;
 import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 
+import org.jade.core.api.IResultSetExtracter;
 import org.jade.core.api.ISQLExecuter;
 
 
@@ -26,14 +27,24 @@ public class SQLExecuterContext {
 	private Class<?> returnType;
 
 	private Type[] actualTypeArguments;
+	
+	@SuppressWarnings("rawtypes")
+	private Class<? extends IResultSetExtracter> exracter;
 
-	public SQLExecuterContext(java.sql.PreparedStatement prepareStatement, String sql, Class<?> returnType,
-			Type[] actualTypeArguments) {
+	private Class<?> daoClass; 
+	
+	private String methodName;
+
+	public SQLExecuterContext(PreparedStatement statement, String sql, Class<?> returnType, Type[] actualTypeArguments,
+			Class<? extends IResultSetExtracter> exracter, Class<?> daoClass, String methodName) {
 		super();
-		this.statement = prepareStatement;
+		this.statement = statement;
 		this.sql = sql;
 		this.returnType = returnType;
 		this.actualTypeArguments = actualTypeArguments;
+		this.exracter = exracter;
+		this.daoClass = daoClass;
+		this.methodName = methodName;
 	}
 
 	public PreparedStatement getStatement() {
@@ -52,4 +63,23 @@ public class SQLExecuterContext {
 		return actualTypeArguments;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public Class<? extends IResultSetExtracter> getExracter() {
+		return exracter;
+	}
+
+	public Class<?> getDAOClass() {
+		return daoClass;
+	}
+
+	public Class<?> getDaoClass() {
+		return daoClass;
+	}
+
+	public String getMethodName() {
+		return methodName;
+	}
+
+	
+	 
 }

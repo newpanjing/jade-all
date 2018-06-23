@@ -14,7 +14,6 @@ import java.util.List;
 import org.jade.core.api.SQL;
 import org.jade.core.api.SQLParam;
 import org.jade.core.domain.SQLParamContext;
-import org.jade.core.exception.SQLMakeException;
 import org.jade.db.DataSourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

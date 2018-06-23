@@ -3,11 +3,13 @@
  */
 package org.jade.example;
 
+import org.jade.core.api.Bean;
+
 /**
  * @author Jack Lei
  * @Email 895896736@qq.com
  */
-
+@Bean
 public class Account {
 	private int id;
 

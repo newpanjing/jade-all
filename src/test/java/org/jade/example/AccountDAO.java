@@ -16,6 +16,8 @@ import org.jade.core.constrant.SQLType;
 @DAO
 public interface AccountDAO {
 
+  
+	
 	@SQL(val = "Select * from Account ", type = SQLType.SELECT)
 	Account query();
 	
@@ -34,6 +36,4 @@ public interface AccountDAO {
 	@SQL(val="Update Account set name = ? where id = ?",type = SQLType.UPDATE)
 	int updateById(int id,String name);
 	
-	@SQL(val="Insert into Account()Values(?,?)",type = SQLType.INSERT)
-	int insert(int id, String name);
 }

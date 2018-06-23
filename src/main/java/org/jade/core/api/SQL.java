@@ -13,11 +13,14 @@ import org.jade.core.constrant.SQLType;
 
 /**
  * <pre>
- * <ul>SQL语句注解
+ * <ul>SQL语句注解:
+ *
  * <li>填写被执行的SQL语句</li>
  * <li>支持参数
  *     <ul>参数定义的方式
  *     <li>方法参数列表中，参数将被{@link PreparedStatement}调用setXXX方法，按方法参数列表中的顺序进行参数设置</li>
+ *     <li>动态参数只支持8种基本数据类型,其他类型的参数不会处理</li>
+ *     <li>方法参数列表中的参数要与SQL中的参数个数、参数类型，保持一致性</li>
  *     <li>举例
  *         @SQL("Select * from Table Where Id = ?")
  *         void query(int id);

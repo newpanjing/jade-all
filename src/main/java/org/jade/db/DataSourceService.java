@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jade.core.api.Extracter;
+import org.jade.core.api.IResultSetExtracter;
 import org.jade.core.constrant.ErrorCode;
 import org.jade.core.constrant.SQLType;
 import org.jade.core.domain.SQLExecuterContext;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 public class DataSourceService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceService.class);
 
+	@SuppressWarnings("rawtypes")
 	public static Object execute(SQLParamContext context) {
 		Object[] methodParams = context.getMethodParams();
 		Connection con = null;
@@ -41,9 +44,23 @@ public class DataSourceService {
 				return checkResult;
 			}
 			SQLType type = context.getSqlAnnotation().type();
-
-			SQLExecuterContext param = new SQLExecuterContext(prepareStatement, sql,
-					context.getMethod().getReturnType(), context.getActualTypeArguments());
+			
+			Class<? extends IResultSetExtracter> extracter =null;
+			
+			if(context.getMethod().isAnnotationPresent(Extracter.class)){
+				Extracter annotation = context.getMethod().getAnnotation(Extracter.class);
+				extracter = annotation.extracter();
+			}
+			
+			SQLExecuterContext param = new SQLExecuterContext(prepareStatement, 
+															  sql,
+															  context.getMethod().getReturnType(),
+															  context.getActualTypeArguments(),
+															  extracter,
+															  context.getMethod().getDeclaringClass(),
+															  context.getMethod().toString()
+															  );
+					
 			switch (type) {
 			case DELETE:
 				return SQLIUDExecuter.INSTANCE.execute(param);
@@ -87,11 +104,21 @@ public class DataSourceService {
 						prepareStatement.setInt(index + 1, Integer.valueOf(paramObj.toString()));
 					} else if (paramClass == String.class) {
 						prepareStatement.setString(index + 1, paramObj.toString());
-					} else if (paramClass == Float.class) {
+					} else if (paramClass == Float.class || paramClass == float.class) {
 						prepareStatement.setFloat(index + 1, Float.valueOf(paramObj.toString()));
-					} else if (paramClass == Long.class) {
+					} else if (paramClass == Long.class || paramClass == long.class) {
 						prepareStatement.setLong(index + 1, Long.valueOf(paramObj.toString()));
-					} else {
+					} else if(paramClass == Double.class || paramClass == double.class){
+						prepareStatement.setDouble(index + 1, Double.valueOf(paramObj.toString()));
+					}else if(paramClass == Byte.class || paramClass == byte.class){
+						prepareStatement.setByte(index + 1, Byte.valueOf(paramObj.toString()));
+					}else if(paramClass == Boolean.class || paramClass == boolean.class){
+						prepareStatement.setBoolean(index + 1, Boolean.valueOf(paramObj.toString()));
+					}else if(paramClass == Short.class || paramClass == short.class){
+						prepareStatement.setShort(index + 1, Short.valueOf(paramObj.toString()));
+					}
+					else {
+						LOGGER.error("未处理的参数类型  = {}",paramClass);
 						return ErrorCode.SQL_PARAM_PRE_SET_NOT_SERV;
 					}
 				} catch (NumberFormatException e) {
