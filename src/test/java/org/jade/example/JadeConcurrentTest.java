@@ -9,7 +9,7 @@ public class JadeConcurrentTest {
 
 	public static void main(String[] args) {
 		JadeBootstrap.start("org.jade");
-		AccountDAO dao = JadeDAOService.getDao(AccountDAO.class);
+		final AccountDAO dao = JadeDAOService.getDao(AccountDAO.class);
 		try {
 			Thread.sleep(3*1000L);
 		} catch (InterruptedException e1) {
