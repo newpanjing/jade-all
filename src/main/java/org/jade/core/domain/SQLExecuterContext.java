@@ -35,6 +35,7 @@ public class SQLExecuterContext {
 	
 	private String methodName;
 
+	@SuppressWarnings("rawtypes")
 	public SQLExecuterContext(PreparedStatement statement, String sql, Class<?> returnType, Type[] actualTypeArguments,
 			Class<? extends IResultSetExtracter> exracter, Class<?> daoClass, String methodName) {
 		super();

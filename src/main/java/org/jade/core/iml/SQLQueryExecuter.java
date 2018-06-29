@@ -6,7 +6,6 @@ package org.jade.core.iml;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,12 +44,11 @@ public class SQLQueryExecuter implements ISQLExecuter {
 		return SQLType.SELECT;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public Object execute(SQLExecuterContext param) throws SQLException {
 		PreparedStatement statement = param.getStatement();
 		Class<?> returnType = param.getReturnType();
-		Type[] actualTypeArguments = param.getActualTypeArguments();
 		ResultSet resultSet = null;
 
 		resultSet = statement.executeQuery();

@@ -85,19 +85,20 @@ public class JadeConcurrentTest {
 		}
 	}
 
+	private static void queryById2(AccountDAO dao) {
+		//Account queryById2 = dao.queryById2(6, "2");
+	}
+	/*
 	private static void deleteById(AccountDAO dao) {
 		int deleteById = dao.deleteById(1);
 		System.out.println("deleteById " + deleteById);
 	}
 
-	private static void queryById2(AccountDAO dao) {
-		Account queryById2 = dao.queryById2(6, "2");
-	}
 
 	private static void queryListByid(AccountDAO dao) {
 		Account queryById = dao.queryById(1);
 		System.out.println("queryById " + queryById);
-	}
+	}*/
 
 	private static void queryList(AccountDAO dao) {
 		 dao.queryList();

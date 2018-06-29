@@ -1,12 +1,10 @@
 package org.jade.core.iml;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.jade.core.api.ISQLExecuter;
 import org.jade.core.constrant.SQLType;
 import org.jade.core.domain.SQLExecuterContext;
-import org.jade.core.exception.SQLExecuteException;
 
 /***
  * <pre>

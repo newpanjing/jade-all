@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import org.jade.core.constrant.SQLType;
 import org.jade.core.domain.SQLExecuterContext;
-import org.jade.core.exception.SQLExecuteException;
 
 /**
  * <pre>
